@@ -1,0 +1,13 @@
+## Title: LibFilteredChatPanel
+## Description: Provides a chat panel with toggleable filters
+## Author: Kyzeragon
+## Version: 0.0.0
+## APIVersion: 101032
+## SavedVariables: LibFilteredChatPanelSavedVariables
+## DependsOn: LibAddonMenu-2.0>=31
+## IsLibrary: true
+
+init.lua
+window.lua
+filter.lua
+ui.xml
