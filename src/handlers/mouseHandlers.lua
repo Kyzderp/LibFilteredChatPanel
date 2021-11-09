@@ -70,5 +70,5 @@ function LFCP.OnFilterIconClicked(control)
 
     AdjustFilterIcon(control, LFCP.savedOptions.toggles[filterName])
 
-    -- TODO: redo the buffer
+    LFCP.ResetBuffer()
 end

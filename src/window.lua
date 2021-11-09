@@ -34,7 +34,7 @@ local function AdjustSlider()
     end
 end
 
-local function AddColoredText(text, color)
+local function AddColoredText(text, color, adjustSlider)
     if not text or #color~=3 then return end
 
     local red   = color[1] or 1
@@ -43,7 +43,10 @@ local function AddColoredText(text, color)
 
     FilteredChatPanelContentBuffer:AddMessage(text, red, green, blue) -- Add message first
 
-    if FilteredChatPanelContentSlider then AdjustSlider() end -- Set new slider value & check visibility
+     -- Set new slider value & check visibility
+    if (adjustSlider and FilteredChatPanelContentSlider) then
+        AdjustSlider()
+    end
 end
 LFCP.AddColoredText = AddColoredText
 
@@ -97,6 +100,59 @@ local function InitBuffer()
         buffer:SetScrollPosition(0)
         slider:SetValue(buffer:GetNumHistoryLines())
     end)
+end
+
+----------------------------------------------------------------------
+-- Upon filters changed, redo the entire buffer :harold:
+----------------------------------------------------------------------
+function LFCP.ResetBuffer()
+    local beginTime = GetGameTimeMilliseconds()
+
+    FilteredChatPanelContentBuffer:Clear()
+
+    -- Start at the end of each lines array
+    local linesIndices = {}
+    for _, filter in pairs(LFCP.filters) do
+        if (LFCP.savedOptions.toggles[filter.name]) then
+            linesIndices[filter.name] = #filter.lines
+        end
+    end
+
+    -- Initialize priority queue with the indices
+    local pQueue = LFCP.PriorityQueue()
+    for filterName, linesIndex in pairs(linesIndices) do
+        local line = LFCP.filters[filterName].lines[linesIndex]
+        pQueue:put(filterName, -line.time)
+    end
+
+    -- Build a table of the MAX_HISTORY_LINES most recent lines
+    local newLines = {}
+    for i = 1, LFCP_MAX_HISTORY_LINES do
+        if (pQueue:size() < 1) then break end
+
+        -- Add the largest time to the new lines
+        local filterName = pQueue:pop()
+        local filterLines = LFCP.filters[filterName].lines
+        table.insert(newLines, {text = filterLines[linesIndices[filterName]].formattedText, color = LFCP.filters[filterName].color})
+
+        -- Move pointer to previous line in this filter
+        linesIndices[filterName] = linesIndices[filterName] - 1
+        if (linesIndices[filterName] > 0) then
+            pQueue:put(filterName, -filterLines[linesIndices[filterName]].time)
+        end
+    end
+
+    -- Actually add the text, but backwards, and don't touch the scrollbar
+    for i = 1, #newLines do
+        local line = newLines[#newLines - i + 1]
+        AddColoredText(line.text, line.color, false)
+    end
+
+    -- Update scrollbar
+    AdjustSlider()
+
+    local endTime = GetGameTimeMilliseconds()
+    LFCP:GetSystemFilter():AddMessage(string.format("LFCP.ResetBuffer() took %dms", endTime - beginTime))
 end
 
 ----------------------------------------------------------------------

@@ -44,7 +44,7 @@ end
 
 ----------------------------------------------------------------------
 -- Add a message to a specific filter
--- /script LibFilteredChatPanel.AddColoredText("|H0:LFCP:System2|h|c881122blahblah|r|h", {1, 1, 1})
+-- /script LibFilteredChatPanel.AddColoredText("|H0:LFCP:System2|h|c881122blahblah|r|h", {1, 1, 1}, true)
 -- /script for i = 2, 20 do LibFilteredChatPanel:GetSystemFilter():AddMessage("derp" .. tostring(i)) end
 -- /script LibFilteredChatPanel:GetSystemFilter():AddMessage("derp21")
 ----------------------------------------------------------------------
@@ -66,12 +66,14 @@ function LFCP_Filter:AddMessage(text)
     local line = {time = time, formattedText = formattedText, rawText = text}
     table.insert(self.lines, line)
 
-    LFCP.AddColoredText(formattedText, self.color)
+    -- Only add the text if filter is enabled, duh
+    if (LFCP.savedOptions.toggles[self.name]) then
+        LFCP.AddColoredText(formattedText, self.color, true)
+    end
 
     -- Clean up the lines table if it's too large
     if (#self.lines > LFCP.MAX_HISTORY_LINES * 2) then
         d("|cFF0000CLEANING UP LINES TABLE FOR " .. self.name .. "|r")
-        -- LFCP.AddColoredText("CLEANING UP LINES TABLE FOR " .. self.name, {1, 0, 0})
         for i = 1, LFCP.MAX_HISTORY_LINES do
             table.remove(self.lines, 1)
         end

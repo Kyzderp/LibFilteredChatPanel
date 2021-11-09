@@ -7,6 +7,8 @@
 ## DependsOn: LibAddonMenu-2.0>=31
 ## IsLibrary: true
 
+lib/priority_queue.lua
+
 src/init.lua
 src/window.lua
 src/filter.lua
