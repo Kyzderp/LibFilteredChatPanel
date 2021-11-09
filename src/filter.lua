@@ -51,7 +51,7 @@ end
 function LFCP_Filter:AddMessage(text)
     local time = GetGameTimeMilliseconds()
 
-    -- Wrap the timestamp in a link so that clicking it will copy
+    -- Wrap the timestamp in a link so that clicking it will put it in the text field
     local timestamp = string.format("|c888888|H0:LFCP:%s=%d|h[%s.%03d]|h|r ",
         self.name,
         #self.lines + 1,
@@ -63,7 +63,7 @@ function LFCP_Filter:AddMessage(text)
         self.showIcon and string.format("|t12:12:%s|t ", self.icon) or "",
         text)
 
-    local line = {time = time, formattedText = formattedText}
+    local line = {time = time, formattedText = formattedText, rawText = text}
     table.insert(self.lines, line)
 
     LFCP.AddColoredText(formattedText, self.color)

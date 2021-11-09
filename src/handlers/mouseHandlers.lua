@@ -25,6 +25,6 @@ function LFCP.OnLinkClicked(button, linkText, linkData)
 
         local line = filter.lines[index]
         d(line.formattedText)
-        -- TODO: put it in text field
+        LFCP.SetTextAndFocus(line.rawText)
     end
 end

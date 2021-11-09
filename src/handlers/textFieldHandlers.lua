@@ -16,3 +16,8 @@ function LFCP.OnTextFieldEscape()
     FilteredChatPanelContentFooterTextField:SetText("")
     FilteredChatPanelContentFooterTextField:LoseFocus()
 end
+
+function LFCP.SetTextAndFocus(text)
+    FilteredChatPanelContentFooterTextField:SetText(text)
+    FilteredChatPanelContentFooterTextField:TakeFocus()
+end
