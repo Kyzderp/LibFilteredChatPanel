@@ -7,9 +7,10 @@
 ## DependsOn: LibAddonMenu-2.0>=31
 ## IsLibrary: true
 
-init.lua
-window.lua
-filter.lua
-mouseHandlers.lua
-textFieldHandlers.lua
-ui.xml
+src/init.lua
+src/window.lua
+src/filter.lua
+src/ui.xml
+
+src/handlers/mouseHandlers.lua
+src/handlers/textFieldHandlers.lua
