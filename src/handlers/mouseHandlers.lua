@@ -2,6 +2,19 @@ LibFilteredChatPanel = LibFilteredChatPanel or {}
 local LFCP = LibFilteredChatPanel
 
 ----------------------------------------------------------------------
+-- Slide wheeeeeeeee
+----------------------------------------------------------------------
+function LFCP.OnSidebarClicked()
+    if (LFCP.savedOptions.expanded) then
+        FilteredChatPanel.slide:SetDeltaOffsetX(FilteredChatPanelContent:GetWidth())
+    else
+        FilteredChatPanel.slide:SetDeltaOffsetX(-1 * FilteredChatPanelContent:GetWidth())
+    end
+    LFCP.savedOptions.expanded = not LFCP.savedOptions.expanded
+    FilteredChatPanel.slideAnimation:PlayFromStart()
+end
+
+----------------------------------------------------------------------
 -- Upon right clicking the timestamp, put it in the text field for copying
 ----------------------------------------------------------------------
 function LFCP.OnLinkClicked(button, linkText, linkData)

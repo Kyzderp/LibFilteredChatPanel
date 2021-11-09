@@ -6,6 +6,7 @@ LFCP.MAX_HISTORY_LINES = LFCP_MAX_HISTORY_LINES
 
 ----------------------------------------------------------------------
 -- Yoinked from Combat Metrics - combat log
+----------------------------------------------------------------------
 local function AdjustSlider()
     local buffer = FilteredChatPanelContentBuffer
     local slider = FilteredChatPanelContentSlider
@@ -78,7 +79,6 @@ local function InitBuffer()
     end)
 
     -- Assign Button Functions
-
     local scrollUp = slider:GetNamedChild("ScrollUp")
     local scrollDown = slider:GetNamedChild("ScrollDown")
     local scrollEnd = slider:GetNamedChild("ScrollEnd")
@@ -100,18 +100,7 @@ local function InitBuffer()
 end
 
 ----------------------------------------------------------------------
-function LFCP.OnSidebarClicked()
-    if (LFCP.savedOptions.expanded) then
-        -- Close it and turn it off
-        FilteredChatPanel.slide:SetDeltaOffsetX(FilteredChatPanelContent:GetWidth())
-    else
-        -- Expand it and turn it on
-        FilteredChatPanel.slide:SetDeltaOffsetX(-1 * FilteredChatPanelContent:GetWidth())
-    end
-    LFCP.savedOptions.expanded = not LFCP.savedOptions.expanded
-    FilteredChatPanel.slideAnimation:PlayFromStart()
-end
-
+-- Init
 ----------------------------------------------------------------------
 function LFCP.InitializeWindow()
     HUD_SCENE:AddFragment(ZO_SimpleSceneFragment:New(FilteredChatPanel))
