@@ -12,6 +12,7 @@ LFCP.version = "0.0.0"
 -- Defaults
 local defaultOptions = {
     expanded = false,
+    toggles = {},
 }
 
 ---------------------------------------------------------------------

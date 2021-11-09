@@ -2,6 +2,7 @@ LibFilteredChatPanel = LibFilteredChatPanel or {}
 local LFCP = LibFilteredChatPanel
 
 ----------------------------------------------------------------------
+-- Upon right clicking the timestamp, put it in the text field for copying
 ----------------------------------------------------------------------
 function LFCP.OnLinkClicked(button, linkText, linkData)
     if (button == MOUSE_BUTTON_INDEX_RIGHT) then
@@ -24,7 +25,30 @@ function LFCP.OnLinkClicked(button, linkText, linkData)
         end
 
         local line = filter.lines[index]
-        d(line.formattedText)
         LFCP.SetTextAndFocus(line.rawText)
     end
+end
+
+----------------------------------------------------------------------
+-- Upon clicking filter buttons, toggle the texture and redo buffer
+----------------------------------------------------------------------
+local function AdjustFilterIcon(control, enabled)
+    if (enabled) then
+        control:GetNamedChild("Texture"):SetDesaturation(0)
+        control:GetNamedChild("Texture"):SetColor(1, 1, 1, 1)
+    else
+        control:GetNamedChild("Texture"):SetDesaturation(1)
+        control:GetNamedChild("Texture"):SetColor(0.5, 0.5, 0.5, 1)
+    end
+end
+LFCP.AdjustFilterIcon = AdjustFilterIcon
+
+function LFCP.OnFilterIconClicked(control)
+    local filterName = string.gsub(control:GetName(), "FilteredChatPanelContentHeader", "")
+
+    LFCP.savedOptions.toggles[filterName] = not LFCP.savedOptions.toggles[filterName]
+
+    AdjustFilterIcon(control, LFCP.savedOptions.toggles[filterName])
+
+    -- TODO: redo the buffer
 end

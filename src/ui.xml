@@ -1,17 +1,16 @@
 <GuiXml>
     <Controls>
-        <Control name="FCPHeaderIcon_Template" virtual="true">
+        <Control name="FCPHeaderIcon_Template" mouseEnabled="true" virtual="true">
             <Dimensions x="26" y="26"/>
             <Controls>
-                <Texture name="$(parent)Texture" textureFile="/esoui/art/icons/u26_unknown_antiquity_questionmark.dds" tier="HIGH" mouseEnabled="true">
+                <Texture name="$(parent)Texture" textureFile="/esoui/art/icons/u26_unknown_antiquity_questionmark.dds" tier="HIGH">
                     <Anchor point="CENTER"/>
                     <Dimensions x="24" y="24"/>
-                    <OnMouseUp></OnMouseUp>
                 </Texture>
-                <!-- <Backdrop name="$(parent)Backdrop" centerColor="4000FF00" edgeColor="00000000">
-                    <AnchorFill/>
-                </Backdrop> -->
             </Controls>
+            <OnMouseUp>
+                LibFilteredChatPanel.OnFilterIconClicked(self)
+            </OnMouseUp>
         </Control>
 <!-- ======================================================================================================================= -->
         <TopLevelControl name="FilteredChatPanel" clampedToScreen="false" mouseEnabled="false" movable="false" hidden="false">

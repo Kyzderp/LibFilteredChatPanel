@@ -90,15 +90,18 @@ function LFCP:CreateFilter(name, icon, color, showIcon)
     local filter = LFCP_Filter.new(name, icon, color, showIcon)
     LFCP.filters[name] = filter
     LFCP.numFilters = LFCP.numFilters + 1
+    if (LFCP.savedOptions.toggles[name] == nil) then
+        LFCP.savedOptions.toggles[name] = true
+    end
 
     local headerControl = CreateControlFromVirtual(
         "$(parent)" .. name, 
         FilteredChatPanelContentHeader,
         "FCPHeaderIcon_Template",
         "")
-    headerControl:GetNamedChild("Texture"):SetTexture(icon)
-
     headerControl:SetAnchor(BOTTOMLEFT, FilteredChatPanelContentHeader, BOTTOMLEFT, (LFCP.numFilters - 1) * 26 + 4, -6)
+    headerControl:GetNamedChild("Texture"):SetTexture(icon)
+    LFCP.AdjustFilterIcon(headerControl, LFCP.savedOptions.toggles[name])
 
     filter:AddMessage("Created " .. name .. " filter")
 
