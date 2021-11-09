@@ -10,4 +10,5 @@
 init.lua
 window.lua
 filter.lua
+mouseHandlers.lua
 ui.xml

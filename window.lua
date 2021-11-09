@@ -124,9 +124,10 @@ function LFCP.InitializeWindow()
     InitBuffer()
 
     if (LFCP.savedOptions.expanded) then
-        LFCP.OnSidebarClicked()
+        FilteredChatPanel.slide:SetDeltaOffsetX(-1 * FilteredChatPanelContent:GetWidth())
+        FilteredChatPanel.slideAnimation:PlayFromStart()
     end
 
-    local systemFilter = LFCP:CreateFilter("System", "/esoui/art/mail/mail_systemicon.dds", {0.93, 0.93, 0}, false, true)
-    local playerFilter = LFCP:CreateFilter("Player", "/esoui/art/mappins/ui-worldmapplayerpip.dds", {0.4, 1, 1}, true, true)
+    local systemFilter = LFCP:CreateFilter("System", "/esoui/art/mail/mail_systemicon.dds", {0.93, 0.93, 0}, false)
+    local playerFilter = LFCP:CreateFilter("Player", "/esoui/art/mappins/ui-worldmapplayerpip.dds", {0.4, 1, 1}, true)
 end
