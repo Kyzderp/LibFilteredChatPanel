@@ -11,4 +11,5 @@ init.lua
 window.lua
 filter.lua
 mouseHandlers.lua
+textFieldHandlers.lua
 ui.xml

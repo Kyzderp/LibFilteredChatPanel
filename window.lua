@@ -128,6 +128,6 @@ function LFCP.InitializeWindow()
         FilteredChatPanel.slideAnimation:PlayFromStart()
     end
 
-    local systemFilter = LFCP:CreateFilter("System", "/esoui/art/mail/mail_systemicon.dds", {0.93, 0.93, 0}, false)
-    local playerFilter = LFCP:CreateFilter("Player", "/esoui/art/mappins/ui-worldmapplayerpip.dds", {0.4, 1, 1}, true)
+    LFCP:CreateFilter("System", "/esoui/art/mail/mail_systemicon.dds", {0.93, 0.93, 0}, false)
+    LFCP:CreateFilter("Player", "/esoui/art/menubar/gamepad/gp_playermenu_icon_textchat.dds", {0.4, 1, 1}, true)
 end

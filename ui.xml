@@ -59,9 +59,19 @@
                             <Anchor point="BOTTOMLEFT" relativeTo="$(parent)" relativePoint="BOTTOMLEFT"/>
                             <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)" relativePoint="BOTTOMRIGHT"/>
                             <Controls>
-                                <!-- <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="00000000">
-                                    <AnchorFill/>
-                                </Backdrop> -->
+                                <Texture name="$(parent)Texture" textureFile="/esoui/art/menubar/gamepad/gp_playermenu_icon_textchat.dds">
+                                    <Anchor point="LEFT" offsetX="2"/>
+                                    <Dimensions x="24" y="24"/>
+                                </Texture>
+                                <EditBox name="$(parent)TextField" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" font="$(MEDIUM_FONT)|$(KB_16)|soft-shadow-thin">
+                                    <Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPRIGHT" offsetX="6" offsetY="2"/>
+                                    <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)" relativePoint="BOTTOMRIGHT" offsetX="-10" offsetY="-5"/>
+                                    <Controls><Backdrop name="$(parent)Backdrop" inherits="ZO_SingleLineEditBackdrop_Keyboard"><AnchorFill/></Backdrop></Controls>
+                                    <OnEnter>LibFilteredChatPanel.OnTextFieldEnter()</OnEnter>
+                                    <OnEscape>LibFilteredChatPanel.OnTextFieldEscape()</OnEscape>
+                                    <OnUpArrow></OnUpArrow>
+                                    <OnDownArrow></OnDownArrow>
+                                </EditBox>
                             </Controls>
                         </Control>
 <!-- ======================================================================================================================= -->
