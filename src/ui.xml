@@ -78,7 +78,7 @@
                             <Anchor point="TOPLEFT" relativeTo="$(parent)Header" relativePoint="BOTTOMLEFT"/>
                             <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)Footer" relativePoint="TOPRIGHT" offsetX="-16"/>
                             <OnLinkMouseUp>
-                                LibFilteredChatPanel.OnLinkClicked(button, linkText, linkData, command)
+                                LibFilteredChatPanel.OnLinkClicked(linkText, button, self, linkData)
                             </OnLinkMouseUp>
                         </TextBuffer>
                         

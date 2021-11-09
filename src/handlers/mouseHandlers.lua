@@ -16,29 +16,36 @@ end
 
 ----------------------------------------------------------------------
 -- Upon right clicking the timestamp, put it in the text field for copying
+-- /script LibFilteredChatPanel:GetSystemFilter():AddMessage("|H1:item:80725:359:50:0:0:0:0:0:0:0:0:0:0:0:0:7:0:0:0:0:0|h|h")
+-- /script d(string.gmatch("1:item:80725:359:50:0:0:0:0:0:0:0:0:0:0:0:0:7:0:0:0:0:0", "0:LFCP:"))
 ----------------------------------------------------------------------
-function LFCP.OnLinkClicked(button, linkText, linkData)
-    if (button == MOUSE_BUTTON_INDEX_RIGHT) then
-        -- Copy
-        local key = string.gsub(linkData, "0:LFCP:", "")
-        local filterName = nil
-        local index = nil
-        for word in string.gmatch(key, "([^=]+)") do
-            if (not filterName) then
-                filterName = word
-            else
-                index = tonumber(word)
+function LFCP.OnLinkClicked(linkText, button, self, linkData)
+    if (string.match(linkData, "0:LFCP:")) then
+        if (button == MOUSE_BUTTON_INDEX_RIGHT) then
+            -- Copy
+            local key = string.gsub(linkData, "0:LFCP:", "")
+            local filterName = nil
+            local index = nil
+            for word in string.gmatch(key, "([^=]+)") do
+                if (not filterName) then
+                    filterName = word
+                else
+                    index = tonumber(word)
+                end
             end
-        end
 
-        -- Offset due to cleanup
-        local filter = LFCP.filters[filterName]
-        if (index > #filter.lines) then
-            index = index - LFCP.MAX_HISTORY_LINES
-        end
+            -- Offset due to cleanup
+            local filter = LFCP.filters[filterName]
+            if (index > #filter.lines) then
+                index = index - LFCP.MAX_HISTORY_LINES
+            end
 
-        local line = filter.lines[index]
-        LFCP.SetTextAndFocus(line.rawText)
+            local line = filter.lines[index]
+            LFCP.SetTextAndFocus(line.rawText)
+        end
+    else
+        -- Other links should continue handlers
+        ZO_LinkHandler_OnLinkMouseUp(linkText, button, self)
     end
 end
 
