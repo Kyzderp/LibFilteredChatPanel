@@ -2,6 +2,7 @@ LibFilteredChatPanel = LibFilteredChatPanel or {}
 local LFCP = LibFilteredChatPanel
 
 local LFCP_MAX_HISTORY_LINES = 500
+LFCP.MAX_HISTORY_LINES = LFCP_MAX_HISTORY_LINES
 
 ----------------------------------------------------------------------
 -- Yoinked from Combat Metrics - combat log
@@ -50,6 +51,7 @@ local function InitBuffer()
     local slider = FilteredChatPanelContentSlider
 
     buffer:SetMaxHistoryLines(LFCP_MAX_HISTORY_LINES)
+    buffer:SetFont("$(MEDIUM_FONT)|$(KB_13)|soft-shadow-thin")
 
     buffer:SetHandler("OnMouseWheel", function(self, delta, ctrl, alt, shift)
         local offset = delta
@@ -98,16 +100,15 @@ local function InitBuffer()
 end
 
 ----------------------------------------------------------------------
-local expanded = false
 function LFCP.OnSidebarClicked()
-    if (expanded) then
+    if (LFCP.savedOptions.expanded) then
         -- Close it and turn it off
         FilteredChatPanel.slide:SetDeltaOffsetX(FilteredChatPanelContent:GetWidth())
     else
         -- Expand it and turn it on
         FilteredChatPanel.slide:SetDeltaOffsetX(-1 * FilteredChatPanelContent:GetWidth())
     end
-    expanded = not expanded
+    LFCP.savedOptions.expanded = not LFCP.savedOptions.expanded
     FilteredChatPanel.slideAnimation:PlayFromStart()
 end
 
@@ -122,9 +123,10 @@ function LFCP.InitializeWindow()
 
     InitBuffer()
 
-    local playerFilter = LFCP.CreateFilter("Player", "/esoui/art/mappins/ui-worldmapplayerpip.dds", {0.4, 1, 1}, true, true)
-
-    for i = 1, 400 do
-        playerFilter:AddMessage("yeet" .. tostring(i))
+    if (LFCP.savedOptions.expanded) then
+        LFCP.OnSidebarClicked()
     end
+
+    local systemFilter = LFCP:CreateFilter("System", "/esoui/art/mail/mail_systemicon.dds", {0.93, 0.93, 0}, false, true)
+    local playerFilter = LFCP:CreateFilter("Player", "/esoui/art/mappins/ui-worldmapplayerpip.dds", {0.4, 1, 1}, true, true)
 end

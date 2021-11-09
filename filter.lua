@@ -28,19 +28,18 @@ LFCP.numFilters = 0
 ----------------------------------------------------------------------
 -- OOP? Trying it out
 ----------------------------------------------------------------------
-LFCP_Filter = {name = "", icon = "", color = {1, 1, 1}, showIcon = false, showTimestamp = true, lines = {}}
+local LFCP_Filter = {}
+LFCP_Filter.__index = LFCP_Filter
 
-function LFCP_Filter:new(name, icon, color, showIcon, showTimestamp)
-    o = {}
-    setmetatable(o, self)
-    self.__index = self
+function LFCP_Filter.new(name, icon, color, showIcon, showTimestamp)
+    local self = setmetatable({}, LFCP_Filter)
     self.name = name
     self.icon = icon
     self.color = color or {1, 1, 1}
     self.showIcon = showIcon or false
     self.showTimestamp = showTimestamp or true
     self.lines = {}
-    return o
+    return self
 end
 
 ----------------------------------------------------------------------
@@ -61,19 +60,23 @@ function LFCP_Filter:AddMessage(text)
     local line = {time = time, formattedText = formattedText}
     table.insert(self.lines, line)
 
+    if (#self.lines > LFCP.MAX_HISTORY_LINES) then
+        table.remove(self.lines, 1)
+    end
+
     LFCP.AddColoredText(formattedText, self.color)
 end
 
 ----------------------------------------------------------------------
 -- Entry point to make a filter tab in the panel
 ----------------------------------------------------------------------
-function LFCP.CreateFilter(name, icon, color, showIcon, showTimestamp)
+function LFCP:CreateFilter(name, icon, color, showIcon, showTimestamp)
     if (LFCP.filters[name]) then
         d("|cFF0000[LFCP] Filter already exists for name " .. name .. "!|r")
         return
     end
 
-    local filter = LFCP_Filter:new(name, icon, color, showIcon, showTimestamp)
+    local filter = LFCP_Filter.new(name, icon, color, showIcon, showTimestamp)
     LFCP.filters[name] = filter
     LFCP.numFilters = LFCP.numFilters + 1
 
@@ -86,5 +89,15 @@ function LFCP.CreateFilter(name, icon, color, showIcon, showTimestamp)
 
     headerControl:SetAnchor(BOTTOMLEFT, FilteredChatPanelContentHeader, BOTTOMLEFT, (LFCP.numFilters - 1) * 26 + 4, -6)
 
+    filter:AddMessage("Created " .. name .. " filter")
+
     return filter
 end
+
+----------------------------------------------------------------------
+-- Allow use of the System filter
+----------------------------------------------------------------------
+function LFCP:GetSystemFilter()
+    return LFCP.filters["System"]
+end
+

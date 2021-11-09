@@ -5,7 +5,7 @@
             <Controls>
                 <Texture name="$(parent)Texture" textureFile="/esoui/art/icons/u26_unknown_antiquity_questionmark.dds" tier="HIGH" mouseEnabled="true">
                     <Anchor point="CENTER"/>
-                    <Dimensions x="18" y="18"/>
+                    <Dimensions x="24" y="24"/>
                     <OnMouseUp></OnMouseUp>
                 </Texture>
                 <!-- <Backdrop name="$(parent)Backdrop" centerColor="4000FF00" edgeColor="00000000">
