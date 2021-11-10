@@ -5,7 +5,9 @@ local LFCP_MAX_HISTORY_LINES = 500
 LFCP.MAX_HISTORY_LINES = LFCP_MAX_HISTORY_LINES
 
 ----------------------------------------------------------------------
--- Yoinked from Combat Metrics - combat log
+-- Yoinked from Combat Metrics's combat log, with some modifications
+-- /script local buffer = FilteredChatPanelContentBuffer d(buffer:GetNumHistoryLines(), buffer:GetNumVisibleLines(), buffer:GetScrollPosition())
+-- /script local slider = FilteredChatPanelContentSlider d(slider:GetMinMax()) d(slider:GetValue())
 ----------------------------------------------------------------------
 local function AdjustSlider()
     local buffer = FilteredChatPanelContentBuffer
@@ -13,7 +15,6 @@ local function AdjustSlider()
 
     local numHistoryLines = buffer:GetNumHistoryLines()
     local numVisHistoryLines = buffer:GetNumVisibleLines() --it seems numVisHistoryLines is getting screwed by UI Scale
-    local bufferScrollPos = buffer:GetScrollPosition()
 
     local sliderMin, sliderMax = slider:GetMinMax()
     local sliderValue = slider:GetValue()
@@ -22,14 +23,17 @@ local function AdjustSlider()
 
     if sliderValue == sliderMax then -- If the slider's at the bottom, stay at the bottom to show new text
         slider:SetValue(numHistoryLines)
-    elseif numHistoryLines == buffer:GetMaxHistoryLines() then -- If the buffer is full start moving the slider up
-        slider:SetValue(sliderValue-1)
+    elseif numHistoryLines == buffer:GetMaxHistoryLines() then -- If the buffer is full, set the slider value
+        slider:SetValue(buffer:GetMaxHistoryLines() - buffer:GetScrollPosition())
+    else
+        slider:SetValue(buffer:GetNumHistoryLines() - buffer:GetScrollPosition())
     end -- Else the slider does not move
 
     if numHistoryLines > numVisHistoryLines then -- If there are more history lines than visible lines show the slider
         slider:SetHidden(false)
         slider:SetThumbTextureHeight(math.max(20, math.floor(numVisHistoryLines / numHistoryLines * slider:GetHeight())))
     else -- else hide the slider
+        buffer:SetScrollPosition(0)
         slider:SetHidden(true)
     end
 end
@@ -42,6 +46,7 @@ local function AddColoredText(text, color, adjustSlider)
     local blue  = color[3] or 1
 
     FilteredChatPanelContentBuffer:AddMessage(text, red, green, blue) -- Add message first
+    FilteredChatPanelContentBuffer:SetScrollPosition(math.max(0, FilteredChatPanelContentBuffer:GetScrollPosition() - 1))
 
      -- Set new slider value & check visibility
     if (adjustSlider and FilteredChatPanelContentSlider) then

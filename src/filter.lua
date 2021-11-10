@@ -45,7 +45,7 @@ end
 ----------------------------------------------------------------------
 -- Add a message to a specific filter
 -- /script LibFilteredChatPanel.AddColoredText("|H0:LFCP:System2|h|c881122blahblah|r|h", {1, 1, 1}, true)
--- /script for i = 2, 20 do LibFilteredChatPanel:GetSystemFilter():AddMessage("derp" .. tostring(i)) end
+-- /script for i = 1, 500 do LibFilteredChatPanel:GetSystemFilter():AddMessage("derp" .. tostring(i)) end
 -- /script LibFilteredChatPanel:GetSystemFilter():AddMessage("derp21")
 ----------------------------------------------------------------------
 function LFCP_Filter:AddMessage(text)
