@@ -1,4 +1,11 @@
 <GuiXml>
+    <Animations>
+        <AnimationTimeline name="LFCP_ArrowRotateAnim">
+            <Animations>
+                <TextureRotateAnimation duration="400" startRotation="0" endRotation="3.14159265359" />
+            </Animations>
+        </AnimationTimeline>
+    </Animations>
     <Controls>
         <Control name="FCPHeaderIcon_Template" mouseEnabled="true" virtual="true">
             <Dimensions x="26" y="26"/>
@@ -32,11 +39,16 @@
                                 self:SetTransformRotationZ(math.rad(90))
                             </OnInitialized>
                         </Label>
+                        <Texture name="$(parent)Close" textureFile="/esoui/art/buttons/large_rightarrow_up.dds">
+                            <Anchor point="BOTTOM" relativeTo="$(parent)" relativePoint="BOTTOM" offsetX="0" offsetY="-10" />
+                            <Dimensions x="24" y="24" />
+                        </Texture>
                     </Controls>
                     <OnMouseUp>
                         LibFilteredChatPanel.OnSidebarClicked()
                     </OnMouseUp>
                 </Control>
+<!-- ======================================================================================================================= -->
                 <Control name="$(parent)Content">
                     <Anchor point="TOPLEFT" relativeTo="$(parent)Sidebar" relativePoint="TOPRIGHT" offsetX="4"/>
                     <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)" relativePoint="BOTTOMRIGHT"/>

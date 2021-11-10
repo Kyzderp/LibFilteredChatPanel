@@ -7,8 +7,10 @@ local LFCP = LibFilteredChatPanel
 function LFCP.OnSidebarClicked()
     if (LFCP.savedOptions.expanded) then
         FilteredChatPanel.slide:SetDeltaOffsetX(FilteredChatPanelContent:GetWidth())
+        FilteredChatPanelSidebarClose.rotateAnimation:PlayFromStart()
     else
         FilteredChatPanel.slide:SetDeltaOffsetX(-1 * FilteredChatPanelContent:GetWidth())
+        FilteredChatPanelSidebarClose.rotateAnimation:PlayBackward()
     end
     LFCP.savedOptions.expanded = not LFCP.savedOptions.expanded
     FilteredChatPanel.slideAnimation:PlayFromStart()
