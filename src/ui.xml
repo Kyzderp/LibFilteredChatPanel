@@ -45,7 +45,7 @@
                         </Texture>
                     </Controls>
                     <OnMouseUp>
-                        LibFilteredChatPanel.OnSidebarClicked()
+                        LibFilteredChatPanel.OnSidebarClicked(button)
                     </OnMouseUp>
                 </Control>
 <!-- ======================================================================================================================= -->

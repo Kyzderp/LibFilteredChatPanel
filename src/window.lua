@@ -108,11 +108,9 @@ local function InitBuffer()
 end
 
 ----------------------------------------------------------------------
--- Upon filters changed, redo the entire buffer :harold:
+-- Upon filters changed, redo the entire buffer :harold: doesn't seem too bad tbh
 ----------------------------------------------------------------------
 function LFCP.ResetBuffer()
-    local beginTime = GetGameTimeMilliseconds()
-
     FilteredChatPanelContentBuffer:Clear()
 
     -- Start at the end of each lines array
@@ -155,9 +153,6 @@ function LFCP.ResetBuffer()
 
     -- Update scrollbar
     AdjustSlider()
-
-    local endTime = GetGameTimeMilliseconds()
-    LFCP:GetSystemFilter():AddMessage(string.format("LFCP.ResetBuffer() took %dms", endTime - beginTime))
 end
 
 ----------------------------------------------------------------------

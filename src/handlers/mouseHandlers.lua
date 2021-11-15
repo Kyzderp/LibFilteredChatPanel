@@ -4,7 +4,9 @@ local LFCP = LibFilteredChatPanel
 ----------------------------------------------------------------------
 -- Slide wheeeeeeeee
 ----------------------------------------------------------------------
-function LFCP.OnSidebarClicked()
+function LFCP.OnSidebarClicked(button)
+    if (button ~= MOUSE_BUTTON_INDEX_LEFT) then return end
+
     if (LFCP.savedOptions.expanded) then
         FilteredChatPanel.slide:SetDeltaOffsetX(FilteredChatPanelContent:GetWidth())
         FilteredChatPanelSidebarClose.rotateAnimation:PlayFromStart()

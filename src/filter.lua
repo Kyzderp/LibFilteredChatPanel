@@ -73,7 +73,7 @@ function LFCP_Filter:AddMessage(text)
 
     -- Clean up the lines table if it's too large
     if (#self.lines > LFCP.MAX_HISTORY_LINES * 2) then
-        d("|cFF0000CLEANING UP LINES TABLE FOR " .. self.name .. "|r")
+        -- d("|cFF0000CLEANING UP LINES TABLE FOR " .. self.name .. "|r")
         for i = 1, LFCP.MAX_HISTORY_LINES do
             table.remove(self.lines, 1)
         end
