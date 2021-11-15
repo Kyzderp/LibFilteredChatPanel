@@ -18,6 +18,12 @@
             <OnMouseUp>
                 LibFilteredChatPanel.OnFilterIconClicked(self)
             </OnMouseUp>
+            <OnMouseEnter>
+                ZO_Tooltips_ShowTextTooltip(self, LEFT, self.name)
+            </OnMouseEnter>
+            <OnMouseExit>
+                ZO_Tooltips_HideTextTooltip()
+            </OnMouseExit>
         </Control>
 <!-- ======================================================================================================================= -->
         <TopLevelControl name="FilteredChatPanel" clampedToScreen="false" mouseEnabled="false" movable="false" hidden="false">
@@ -32,13 +38,13 @@
                         <Backdrop name="$(parent)Backdrop" centerColor="30000000" edgeColor="00000000">
                             <AnchorFill/>
                         </Backdrop>
-                        <Label name="$(parent)Label" font="ZoFontGameBold" text="FCP" horizontalAlignment="LEFT">
+                        <!-- <Label name="$(parent)Label" font="ZoFontGameBold" text="FCP" horizontalAlignment="LEFT">
                             <Dimensions x="400"/>
                             <Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" offsetY="0"/>
                             <OnInitialized>
                                 self:SetTransformRotationZ(math.rad(90))
                             </OnInitialized>
-                        </Label>
+                        </Label> -->
                         <Texture name="$(parent)Close" textureFile="/esoui/art/buttons/large_rightarrow_up.dds">
                             <Anchor point="BOTTOM" relativeTo="$(parent)" relativePoint="BOTTOM" offsetX="0" offsetY="-10" />
                             <Dimensions x="24" y="24" />

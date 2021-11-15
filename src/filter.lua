@@ -103,6 +103,7 @@ function LFCP:CreateFilter(name, icon, color, showIcon)
         "")
     headerControl:SetAnchor(BOTTOMLEFT, FilteredChatPanelContentHeader, BOTTOMLEFT, (LFCP.numFilters - 1) * 26 + 4, -6)
     headerControl:GetNamedChild("Texture"):SetTexture(icon)
+    headerControl.name = name
     LFCP.AdjustFilterIcon(headerControl, LFCP.savedOptions.toggles[name])
 
     filter:AddMessage("Created " .. name .. " filter")
