@@ -26,9 +26,19 @@
             </OnMouseExit>
         </Control>
 <!-- ======================================================================================================================= -->
-        <TopLevelControl name="FilteredChatPanel" clampedToScreen="false" mouseEnabled="false" movable="false" hidden="false">
+        <TopLevelControl name="FilteredChatPanel" clampedToScreen="false" movable="true" hidden="false" mouseEnabled="true" resizeHandleSize="10">
             <Dimensions x="530" y="700"/>
             <Anchor point="LEFT" relativeTo="GuiRoot" relativePoint="RIGHT" offsetX="0" offsetY="-70"/>
+            <OnMoveStart>
+                self:SetClampedToScreen(true)
+            </OnMoveStart>
+            <OnMoveStop>
+                self:SetClampedToScreen(false)
+                LibFilteredChatPanel.SavePosition()
+            </OnMoveStop>
+            <OnResizeStop>
+                LibFilteredChatPanel.SavePosition()
+            </OnResizeStop>
             <Controls>
 <!-- ======================================================================================================================= -->
                 <Control name="$(parent)Content">
@@ -56,17 +66,11 @@
                                     <Dimensions x="24" y="24"/>
                                 </Texture>
                                 <Texture name="$(parent)Close" textureFile="/esoui/art/buttons/large_rightarrow_up.dds" mouseEnabled="true">
-                                    <Anchor point="RIGHT" relativeTo="$(parent)" relativePoint="LEFT" offsetX="-4" offsetY="0" />
+                                    <Anchor point="RIGHT" relativeTo="$(parent)" relativePoint="RIGHT" offsetX="-4" offsetY="0" />
                                     <Dimensions x="30" y="30" />
                                     <OnMouseUp>
                                         LibFilteredChatPanel.OnSidebarClicked(button)
                                     </OnMouseUp>
-                                    <OnInitialized>
-                                        local left = self:GetLeft()
-                                        local top = self:GetTop()
-                                        self:ClearAnchors()
-                                        self:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, left, top)
-                                    </OnInitialized>
                                     <OnMouseEnter>
                                         ZO_Tooltips_ShowTextTooltip(self, LEFT, "Slide the filtered chat panel")
                                     </OnMouseEnter>

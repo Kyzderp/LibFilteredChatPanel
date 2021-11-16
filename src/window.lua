@@ -156,24 +156,49 @@ function LFCP.ResetBuffer()
 end
 
 ----------------------------------------------------------------------
+-- On resize or move
+----------------------------------------------------------------------
+local function AdjustAnchors()
+    FilteredChatPanel:ClearAnchors()
+    FilteredChatPanel:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT,
+        LibFilteredChatPanel.savedOptions.window.left, LibFilteredChatPanel.savedOptions.window.top)
+    FilteredChatPanel:SetWidth(LibFilteredChatPanel.savedOptions.window.width)
+    FilteredChatPanel:SetHeight(LibFilteredChatPanel.savedOptions.window.height)
+end
+
+function LFCP.SavePosition()
+    LibFilteredChatPanel.savedOptions.window.left = FilteredChatPanel:GetLeft()
+    LibFilteredChatPanel.savedOptions.window.top = FilteredChatPanel:GetTop()
+    LibFilteredChatPanel.savedOptions.window.width = FilteredChatPanel:GetWidth()
+    LibFilteredChatPanel.savedOptions.window.height = FilteredChatPanel:GetHeight()
+
+    AdjustAnchors()
+end
+
+----------------------------------------------------------------------
 -- Init
 ----------------------------------------------------------------------
 function LFCP.InitializeWindow()
     HUD_SCENE:AddFragment(ZO_SimpleSceneFragment:New(FilteredChatPanel))
     HUD_UI_SCENE:AddFragment(ZO_SimpleSceneFragment:New(FilteredChatPanel))
     FilteredChatPanel:SetHidden(false)
+    FilteredChatPanel:SetDimensionConstraints(150, 150)
+    AdjustAnchors()
 
     FilteredChatPanel.slideAnimation = GetAnimationManager():CreateTimelineFromVirtual("ZO_LootSlideInAnimation", FilteredChatPanel)
     FilteredChatPanel.slide = FilteredChatPanel.slideAnimation:GetFirstAnimation()
+
+    FilteredChatPanelContentFooterClose.slideAnimation = GetAnimationManager():CreateTimelineFromVirtual("ZO_LootSlideInAnimation", FilteredChatPanelContentFooterClose)
+    FilteredChatPanelContentFooterClose.slide = FilteredChatPanelContentFooterClose.slideAnimation:GetFirstAnimation()
     FilteredChatPanelContentFooterClose.rotateAnimation = GetAnimationManager():CreateTimelineFromVirtual("LFCP_ArrowRotateAnim", FilteredChatPanelContentFooterClose)
     FilteredChatPanelContentFooterClose.rotate = FilteredChatPanelContentFooterClose.rotateAnimation:GetFirstAnimation()
 
     InitBuffer()
 
-    if (LFCP.savedOptions.expanded) then
-        FilteredChatPanel.slide:SetDeltaOffsetX(-1 * FilteredChatPanelContent:GetWidth())
-        FilteredChatPanel.slideAnimation:PlayFromStart()
-    else
+    if (not LFCP.savedOptions.expanded) then
+        FilteredChatPanel:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, GuiRoot:GetWidth(), LibFilteredChatPanel.savedOptions.window.top)
+        FilteredChatPanelContentFooterClose.slide:SetDeltaOffsetX(-LibFilteredChatPanel.savedOptions.window.width - 6)
+        FilteredChatPanelContentFooterClose.slideAnimation:PlayFromStart()
         FilteredChatPanelContentFooterClose.rotateAnimation:PlayFromStart()
     end
 

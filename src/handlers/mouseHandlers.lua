@@ -3,19 +3,24 @@ local LFCP = LibFilteredChatPanel
 
 ----------------------------------------------------------------------
 -- Slide wheeeeeeeee
+-- /script LibFilteredChatPanel.OnSidebarClicked(MOUSE_BUTTON_INDEX_LEFT)
 ----------------------------------------------------------------------
 function LFCP.OnSidebarClicked(button)
     if (button ~= MOUSE_BUTTON_INDEX_LEFT) then return end
 
     if (LFCP.savedOptions.expanded) then
-        FilteredChatPanel.slide:SetDeltaOffsetX(FilteredChatPanelContent:GetWidth())
+        -- Slide it off screen
+        FilteredChatPanel.slide:SetDeltaOffsetX(GuiRoot:GetWidth() - LibFilteredChatPanel.savedOptions.window.left)
+        FilteredChatPanelContentFooterClose.slide:SetDeltaOffsetX(-LibFilteredChatPanel.savedOptions.window.width - 6)
         FilteredChatPanelContentFooterClose.rotateAnimation:PlayFromStart()
     else
-        FilteredChatPanel.slide:SetDeltaOffsetX(-1 * FilteredChatPanelContent:GetWidth())
+        FilteredChatPanel.slide:SetDeltaOffsetX(LibFilteredChatPanel.savedOptions.window.left - GuiRoot:GetWidth())
+        FilteredChatPanelContentFooterClose.slide:SetDeltaOffsetX(LibFilteredChatPanel.savedOptions.window.width + 6)
         FilteredChatPanelContentFooterClose.rotateAnimation:PlayBackward()
     end
-    LFCP.savedOptions.expanded = not LFCP.savedOptions.expanded
     FilteredChatPanel.slideAnimation:PlayFromStart()
+    FilteredChatPanelContentFooterClose.slideAnimation:PlayFromStart()
+    LFCP.savedOptions.expanded = not LFCP.savedOptions.expanded
 end
 
 ----------------------------------------------------------------------

@@ -11,7 +11,13 @@ LFCP.version = "0.0.0"
 
 -- Defaults
 local defaultOptions = {
-    expanded = false,
+    expanded = true,
+    window = {
+        left = GuiRoot:GetWidth() - 530,
+        top = GuiRoot:GetHeight() / 2 - 70 - 350,
+        width = 530,
+        height = 700,
+    },
     toggles = {},
 }
 
