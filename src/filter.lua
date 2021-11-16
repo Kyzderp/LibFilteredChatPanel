@@ -101,7 +101,7 @@ function LFCP:CreateFilter(name, icon, color, showIcon)
         FilteredChatPanelContentHeader,
         "FCPHeaderIcon_Template",
         "")
-    headerControl:SetAnchor(BOTTOMLEFT, FilteredChatPanelContentHeader, BOTTOMLEFT, (LFCP.numFilters - 1) * 26 + 4, -6)
+    headerControl:SetAnchor(BOTTOMLEFT, FilteredChatPanelContentHeader, BOTTOMLEFT, (LFCP.numFilters - 1) * 26 + 10, -6)
     headerControl:GetNamedChild("Texture"):SetTexture(icon)
     headerControl.name = name
     LFCP.AdjustFilterIcon(headerControl, LFCP.savedOptions.toggles[name])

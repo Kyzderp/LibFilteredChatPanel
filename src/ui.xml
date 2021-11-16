@@ -28,36 +28,11 @@
 <!-- ======================================================================================================================= -->
         <TopLevelControl name="FilteredChatPanel" clampedToScreen="false" mouseEnabled="false" movable="false" hidden="false">
             <Dimensions x="530" y="700"/>
-            <Anchor point="LEFT" relativeTo="GuiRoot" relativePoint="RIGHT" offsetX="-30" offsetY="-70"/>
+            <Anchor point="LEFT" relativeTo="GuiRoot" relativePoint="RIGHT" offsetX="0" offsetY="-70"/>
             <Controls>
-                <Control name="$(parent)Sidebar" mouseEnabled="true">
-                    <Dimensions x="30"/>
-                    <Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT"/>
-                    <Anchor point="BOTTOMLEFT" relativeTo="$(parent)" relativePoint="BOTTOMLEFT"/>
-                    <Controls>
-                        <Backdrop name="$(parent)Backdrop" centerColor="30000000" edgeColor="00000000">
-                            <AnchorFill/>
-                        </Backdrop>
-                        <!-- <Label name="$(parent)Label" font="ZoFontGameBold" text="FCP" horizontalAlignment="LEFT">
-                            <Dimensions x="400"/>
-                            <Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" offsetY="0"/>
-                            <OnInitialized>
-                                self:SetTransformRotationZ(math.rad(90))
-                            </OnInitialized>
-                        </Label> -->
-                        <Texture name="$(parent)Close" textureFile="/esoui/art/buttons/large_rightarrow_up.dds">
-                            <Anchor point="BOTTOM" relativeTo="$(parent)" relativePoint="BOTTOM" offsetX="0" offsetY="-10" />
-                            <Dimensions x="24" y="24" />
-                        </Texture>
-                    </Controls>
-                    <OnMouseUp>
-                        LibFilteredChatPanel.OnSidebarClicked(button)
-                    </OnMouseUp>
-                </Control>
 <!-- ======================================================================================================================= -->
                 <Control name="$(parent)Content">
-                    <Anchor point="TOPLEFT" relativeTo="$(parent)Sidebar" relativePoint="TOPRIGHT" offsetX="4"/>
-                    <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)" relativePoint="BOTTOMRIGHT"/>
+                    <AnchorFill/>
                     <Controls>
                         <Control name="$(parent)Header">
                             <Dimensions y="40"/>
@@ -77,12 +52,31 @@
                             <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)" relativePoint="BOTTOMRIGHT"/>
                             <Controls>
                                 <Texture name="$(parent)Texture" textureFile="/esoui/art/menubar/gamepad/gp_playermenu_icon_textchat.dds">
-                                    <Anchor point="LEFT" offsetX="2"/>
+                                    <Anchor point="LEFT" offsetX="10"/>
                                     <Dimensions x="24" y="24"/>
+                                </Texture>
+                                <Texture name="$(parent)Close" textureFile="/esoui/art/buttons/large_rightarrow_up.dds" mouseEnabled="true">
+                                    <Anchor point="RIGHT" relativeTo="$(parent)" relativePoint="LEFT" offsetX="-4" offsetY="0" />
+                                    <Dimensions x="30" y="30" />
+                                    <OnMouseUp>
+                                        LibFilteredChatPanel.OnSidebarClicked(button)
+                                    </OnMouseUp>
+                                    <OnInitialized>
+                                        local left = self:GetLeft()
+                                        local top = self:GetTop()
+                                        self:ClearAnchors()
+                                        self:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, left, top)
+                                    </OnInitialized>
+                                    <OnMouseEnter>
+                                        ZO_Tooltips_ShowTextTooltip(self, LEFT, "Slide the filtered chat panel")
+                                    </OnMouseEnter>
+                                    <OnMouseExit>
+                                        ZO_Tooltips_HideTextTooltip()
+                                    </OnMouseExit>
                                 </Texture>
                                 <EditBox name="$(parent)TextField" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" font="$(MEDIUM_FONT)|$(KB_16)|soft-shadow-thin">
                                     <Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPRIGHT" offsetX="6" offsetY="2"/>
-                                    <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)" relativePoint="BOTTOMRIGHT" offsetX="-10" offsetY="-5"/>
+                                    <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)" relativePoint="BOTTOMRIGHT" offsetX="-40" offsetY="-5"/>
                                     <Controls><Backdrop name="$(parent)Backdrop" inherits="ZO_SingleLineEditBackdrop_Keyboard"><AnchorFill/></Backdrop></Controls>
                                     <OnEnter>LibFilteredChatPanel.OnTextFieldEnter()</OnEnter>
                                     <OnEscape>LibFilteredChatPanel.OnTextFieldEscape()</OnEscape>
@@ -93,7 +87,7 @@
                         </Control>
 <!-- ======================================================================================================================= -->
                         <TextBuffer name="$(parent)Buffer" font="ZoFontGameSmall" linkEnabled="true" mouseEnabled="true">
-                            <Anchor point="TOPLEFT" relativeTo="$(parent)Header" relativePoint="BOTTOMLEFT"/>
+                            <Anchor point="TOPLEFT" relativeTo="$(parent)Header" relativePoint="BOTTOMLEFT" offsetX="12"/>
                             <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)Footer" relativePoint="TOPRIGHT" offsetX="-16"/>
                             <OnLinkMouseUp>
                                 LibFilteredChatPanel.OnLinkClicked(linkText, button, self, linkData)

@@ -9,10 +9,10 @@ function LFCP.OnSidebarClicked(button)
 
     if (LFCP.savedOptions.expanded) then
         FilteredChatPanel.slide:SetDeltaOffsetX(FilteredChatPanelContent:GetWidth())
-        FilteredChatPanelSidebarClose.rotateAnimation:PlayFromStart()
+        FilteredChatPanelContentFooterClose.rotateAnimation:PlayFromStart()
     else
         FilteredChatPanel.slide:SetDeltaOffsetX(-1 * FilteredChatPanelContent:GetWidth())
-        FilteredChatPanelSidebarClose.rotateAnimation:PlayBackward()
+        FilteredChatPanelContentFooterClose.rotateAnimation:PlayBackward()
     end
     LFCP.savedOptions.expanded = not LFCP.savedOptions.expanded
     FilteredChatPanel.slideAnimation:PlayFromStart()

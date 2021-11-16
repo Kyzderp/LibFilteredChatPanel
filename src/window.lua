@@ -165,8 +165,8 @@ function LFCP.InitializeWindow()
 
     FilteredChatPanel.slideAnimation = GetAnimationManager():CreateTimelineFromVirtual("ZO_LootSlideInAnimation", FilteredChatPanel)
     FilteredChatPanel.slide = FilteredChatPanel.slideAnimation:GetFirstAnimation()
-    FilteredChatPanelSidebarClose.rotateAnimation = GetAnimationManager():CreateTimelineFromVirtual("LFCP_ArrowRotateAnim", FilteredChatPanelSidebarClose)
-    FilteredChatPanelSidebarClose.rotate = FilteredChatPanelSidebarClose.rotateAnimation:GetFirstAnimation()
+    FilteredChatPanelContentFooterClose.rotateAnimation = GetAnimationManager():CreateTimelineFromVirtual("LFCP_ArrowRotateAnim", FilteredChatPanelContentFooterClose)
+    FilteredChatPanelContentFooterClose.rotate = FilteredChatPanelContentFooterClose.rotateAnimation:GetFirstAnimation()
 
     InitBuffer()
 
@@ -174,7 +174,7 @@ function LFCP.InitializeWindow()
         FilteredChatPanel.slide:SetDeltaOffsetX(-1 * FilteredChatPanelContent:GetWidth())
         FilteredChatPanel.slideAnimation:PlayFromStart()
     else
-        FilteredChatPanelSidebarClose.rotateAnimation:PlayFromStart()
+        FilteredChatPanelContentFooterClose.rotateAnimation:PlayFromStart()
     end
 
     LFCP:CreateFilter("System", "/esoui/art/mail/mail_systemicon.dds", {0.93, 0.93, 0}, false)
