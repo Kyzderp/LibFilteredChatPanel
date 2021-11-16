@@ -164,7 +164,11 @@ local function AdjustAnchors()
         LibFilteredChatPanel.savedOptions.window.left, LibFilteredChatPanel.savedOptions.window.top)
     FilteredChatPanel:SetWidth(LibFilteredChatPanel.savedOptions.window.width)
     FilteredChatPanel:SetHeight(LibFilteredChatPanel.savedOptions.window.height)
+
+    FilteredChatPanelContentFooterClose:ClearAnchors()
+    FilteredChatPanelContentFooterClose:SetAnchor(RIGHT, FilteredChatPanelContentFooter, RIGHT, -4, 0)
 end
+LFCP.AdjustAnchors = AdjustAnchors
 
 function LFCP.SavePosition()
     LibFilteredChatPanel.savedOptions.window.left = FilteredChatPanel:GetLeft()

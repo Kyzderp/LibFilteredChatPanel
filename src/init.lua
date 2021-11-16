@@ -28,6 +28,8 @@ local function Initialize()
     LFCP.savedOptions = ZO_SavedVars:NewAccountWide("LibFilteredChatPanelSavedVariables", 1, "Options", defaultOptions)
 
     LFCP.InitializeWindow()
+
+    LFCP.CreateSettingsMenu()
 end
 
 ---------------------------------------------------------------------

@@ -12,6 +12,7 @@ lib/priority_queue.lua
 src/init.lua
 src/window.lua
 src/filter.lua
+src/settings.lua
 src/ui.xml
 
 src/handlers/mouseHandlers.lua

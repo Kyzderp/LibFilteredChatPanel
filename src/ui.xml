@@ -26,7 +26,7 @@
             </OnMouseExit>
         </Control>
 <!-- ======================================================================================================================= -->
-        <TopLevelControl name="FilteredChatPanel" clampedToScreen="false" movable="true" hidden="false" mouseEnabled="true" resizeHandleSize="10">
+        <TopLevelControl name="FilteredChatPanel" clampedToScreen="false" movable="true" hidden="false" mouseEnabled="false" resizeHandleSize="10">
             <Dimensions x="530" y="700"/>
             <Anchor point="LEFT" relativeTo="GuiRoot" relativePoint="RIGHT" offsetX="0" offsetY="-70"/>
             <OnMoveStart>
@@ -61,10 +61,14 @@
                             <Anchor point="BOTTOMLEFT" relativeTo="$(parent)" relativePoint="BOTTOMLEFT"/>
                             <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)" relativePoint="BOTTOMRIGHT"/>
                             <Controls>
-                                <Texture name="$(parent)Texture" textureFile="/esoui/art/menubar/gamepad/gp_playermenu_icon_textchat.dds">
+                                <Button name="$(parent)Settings" alpha="1" clickSound="Default_Click" topmost="true">
+                                    <Textures normal="/esoui/art/housing/keyboard/furniture_tabicon_settings_up.dds" mouseOver="/esoui/art/housing/keyboard/furniture_tabicon_settings_over.dds" />
                                     <Anchor point="LEFT" offsetX="10"/>
                                     <Dimensions x="24" y="24"/>
-                                </Texture>
+                                    <OnClicked>
+                                        LibFilteredChatPanel.OpenSettingsMenu()
+                                    </OnClicked>
+                                </Button>
                                 <Texture name="$(parent)Close" textureFile="/esoui/art/buttons/large_rightarrow_up.dds" mouseEnabled="true">
                                     <Anchor point="RIGHT" relativeTo="$(parent)" relativePoint="RIGHT" offsetX="-4" offsetY="0" />
                                     <Dimensions x="30" y="30" />
@@ -79,7 +83,7 @@
                                     </OnMouseExit>
                                 </Texture>
                                 <EditBox name="$(parent)TextField" inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText" font="$(MEDIUM_FONT)|$(KB_16)|soft-shadow-thin">
-                                    <Anchor point="TOPLEFT" relativeTo="$(parent)Texture" relativePoint="TOPRIGHT" offsetX="6" offsetY="2"/>
+                                    <Anchor point="TOPLEFT" relativeTo="$(parent)Settings" relativePoint="TOPRIGHT" offsetX="6" offsetY="2"/>
                                     <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)" relativePoint="BOTTOMRIGHT" offsetX="-40" offsetY="-5"/>
                                     <Controls><Backdrop name="$(parent)Backdrop" inherits="ZO_SingleLineEditBackdrop_Keyboard"><AnchorFill/></Backdrop></Controls>
                                     <OnEnter>LibFilteredChatPanel.OnTextFieldEnter()</OnEnter>
